@@ -97,6 +97,9 @@
       thisProduct.priceElem = thisProduct.element.querySelector(
         select.menuProduct.priceElem
       );
+      thisProduct.imageWrapper = thisProduct.element.querySelector(
+        select.menuProduct.imageWrapper
+      );
     }
 
     initAccordion() {
@@ -183,6 +186,19 @@
           } else if (!optionSelected && option.default) {
             /* deduct price of option from price */
             price -= option.price;
+          }
+
+          const images = thisProduct.imageWrapper.querySelectorAll(
+            'img.' + paramId + '-' + optionId
+          );
+          if (optionSelected) {
+            for (const image of images) {
+              image.classList.add(classNames.menuProduct.imageVisible);
+            }
+          } else {
+            for (const image of images) {
+              image.classList.remove(classNames.menuProduct.imageVisible);
+            }
           }
         }
       }
