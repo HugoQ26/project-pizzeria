@@ -58,15 +58,15 @@
   class AmountWidget {
     constructor(element) {
       const thisWidget = this;
-      thisWidget.getElements(element); /* 5 */
-      thisWidget.setValue(thisWidget.input.value); /* 7 */
-      thisWidget.initActions(); /* 9 */
+      thisWidget.getElements(element);
+      thisWidget.value = settings.amountWidget.defaultValue;
+      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.initActions();
 
       console.log('AmountWidget', thisWidget);
       console.log('AmountWidget constructor arguments', element);
     }
 
-    /* 4 */
     getElements(element) {
       const thisWidget = this;
 
@@ -83,44 +83,41 @@
       );
     }
 
-    /* 6 */
     setValue(value) {
       const thisWidget = this;
       const newValue = parseInt(value);
 
-      /* TODO: Add validation */
-      //const condition = newValue != thisWidget.input.value;
+      /* [DONE]: Add validation */
 
-      thisWidget.value = newValue;
-      this.announce();
+      const condition =
+        thisWidget.value != newValue &&
+        newValue >= settings.amountWidget.defaultMin &&
+        newValue <= settings.amountWidget.defaultMax;
+      if (condition) {
+        thisWidget.value = newValue;
+        this.announce();
+      }
       thisWidget.input.value = thisWidget.value;
     }
 
-    /* 8 */
     initActions() {
       const thisWidget = this;
 
       thisWidget.input.addEventListener('change', function() {
-        console.log('change', thisWidget.input.value);
         thisWidget.setValue(thisWidget.input.value);
-        console.log('change', thisWidget.input.value);
       });
 
       thisWidget.linkDecrease.addEventListener('click', function(e) {
         e.preventDefault();
-        thisWidget.setValue((thisWidget.value -= 1));
-        console.log('linkDecrease', thisWidget.value);
+        thisWidget.setValue(thisWidget.value - 1);
       });
 
       thisWidget.linkIncrease.addEventListener('click', function(e) {
         e.preventDefault();
-        thisWidget.setValue((thisWidget.value += 1));
-
-        console.log('linkIncrease', thisWidget.value);
+        thisWidget.setValue(thisWidget.value + 1);
       });
     }
 
-    /* 9 */
     announce() {
       const thisWidget = this;
       const event = new Event('updated');
