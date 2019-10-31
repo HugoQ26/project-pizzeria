@@ -60,7 +60,7 @@
       const thisWidget = this;
       thisWidget.getElements(element); /* 5 */
       thisWidget.setValue(thisWidget.input.value); /* 7 */
-      thisWidget.initActions(); /* 8 */
+      thisWidget.initActions(); /* 9 */
 
       console.log('AmountWidget', thisWidget);
       console.log('AmountWidget constructor arguments', element);
@@ -89,8 +89,10 @@
       const newValue = parseInt(value);
 
       /* TODO: Add validation */
+      //const condition = newValue != thisWidget.input.value;
 
       thisWidget.value = newValue;
+      this.announce();
       thisWidget.input.value = thisWidget.value;
     }
 
@@ -104,15 +106,25 @@
         console.log('change', thisWidget.input.value);
       });
 
-      thisWidget.linkDecrease.addEventListener('click', function() {
-        thisWidget.value -= 1;
+      thisWidget.linkDecrease.addEventListener('click', function(e) {
+        e.preventDefault();
+        thisWidget.setValue((thisWidget.value -= 1));
         console.log('linkDecrease', thisWidget.value);
       });
 
-      thisWidget.linkIncrease.addEventListener('click', function() {
-        thisWidget.value += 1;
+      thisWidget.linkIncrease.addEventListener('click', function(e) {
+        e.preventDefault();
+        thisWidget.setValue((thisWidget.value += 1));
+
         console.log('linkIncrease', thisWidget.value);
       });
+    }
+
+    /* 9 */
+    announce() {
+      const thisWidget = this;
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
     }
   }
 
@@ -170,8 +182,11 @@
     initAmountWidget() {
       /* 2 */
       const thisProduct = this;
-
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      /* 9 */
+      thisProduct.amountWidgetElem.addEventListener('updated', function() {
+        thisProduct.processOrder();
+      });
     }
 
     initAccordion() {
@@ -273,6 +288,7 @@
         }
       }
       /* set the contents of thisProduct.priceElem to be the value of variable price */
+      price *= thisProduct.amountWidget.value;
       thisProduct.priceElem.innerHTML = price;
     }
   }
