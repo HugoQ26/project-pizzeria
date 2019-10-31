@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
 {
@@ -54,6 +55,67 @@
     )
   };
 
+  class AmountWidget {
+    constructor(element) {
+      const thisWidget = this;
+      thisWidget.getElements(element); /* 5 */
+      thisWidget.setValue(thisWidget.input.value); /* 7 */
+      thisWidget.initActions(); /* 8 */
+
+      console.log('AmountWidget', thisWidget);
+      console.log('AmountWidget constructor arguments', element);
+    }
+
+    /* 4 */
+    getElements(element) {
+      const thisWidget = this;
+
+      thisWidget.element = element;
+
+      thisWidget.input = thisWidget.element.querySelector(
+        select.widgets.amount.input
+      );
+      thisWidget.linkDecrease = thisWidget.element.querySelector(
+        select.widgets.amount.linkDecrease
+      );
+      thisWidget.linkIncrease = thisWidget.element.querySelector(
+        select.widgets.amount.linkIncrease
+      );
+    }
+
+    /* 6 */
+    setValue(value) {
+      const thisWidget = this;
+      const newValue = parseInt(value);
+
+      /* TODO: Add validation */
+
+      thisWidget.value = newValue;
+      thisWidget.input.value = thisWidget.value;
+    }
+
+    /* 8 */
+    initActions() {
+      const thisWidget = this;
+
+      thisWidget.input.addEventListener('change', function() {
+        console.log('change', thisWidget.input.value);
+        thisWidget.setValue(thisWidget.input.value);
+        console.log('change', thisWidget.input.value);
+      });
+
+      thisWidget.linkDecrease.addEventListener('click', function() {
+        thisWidget.value -= 1;
+        console.log('linkDecrease', thisWidget.value);
+      });
+
+      thisWidget.linkIncrease.addEventListener('click', function() {
+        thisWidget.value += 1;
+        console.log('linkIncrease', thisWidget.value);
+      });
+    }
+  }
+
   class Product {
     constructor(id, data) {
       const thisProduct = this;
@@ -65,6 +127,7 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWidget(); /* 3 */
       thisProduct.processOrder();
     }
     renderInMenu() {
@@ -100,6 +163,15 @@
       thisProduct.imageWrapper = thisProduct.element.querySelector(
         select.menuProduct.imageWrapper
       );
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(
+        select.menuProduct.amountWidget /*  1 */
+      );
+    }
+    initAmountWidget() {
+      /* 2 */
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
     }
 
     initAccordion() {
@@ -134,7 +206,6 @@
 
     initOrderForm() {
       const thisProduct = this;
-      console.log('InitOrderForm()');
 
       thisProduct.form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -157,7 +228,6 @@
 
       /* [DONE] read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('form dataaaaaa', formData);
 
       /* set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;
@@ -172,7 +242,7 @@
         for (const optionId in param.options) {
           /* save the element in param.options with key optionId as const option */
           const option = param.options[optionId];
-          console.log('option', option);
+          //console.log('option', option);
 
           /* START IF: if option is selected and option is not default */
           const optionSelected =
@@ -181,7 +251,7 @@
           if (optionSelected && !option.default) {
             /* add price of option to variable price */
             price += option.price;
-            console.log('price', price);
+            //console.log('price', price);
             /* START ELSE IF: if option is not selected and option is default */
           } else if (!optionSelected && option.default) {
             /* deduct price of option from price */
@@ -222,11 +292,6 @@
     },
     init: function() {
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
 
       thisApp.initData();
       thisApp.initMenu();
