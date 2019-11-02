@@ -99,9 +99,6 @@
       thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
-
-      // console.log('AmountWidget', thisWidget);
-      // console.log('AmountWidget constructor arguments', element);
     }
 
     getElements(element) {
@@ -270,6 +267,7 @@
       thisProduct.cartButton.addEventListener('click', function(event) {
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
     processOrder() {
@@ -277,6 +275,8 @@
 
       /* [DONE] read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
+
+      thisProduct.params = {};
 
       /* set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;
@@ -311,6 +311,13 @@
             'img.' + paramId + '-' + optionId
           );
           if (optionSelected) {
+            if (!thisProduct.params[paramId]) {
+              thisProduct.params[paramId] = {
+                label: param.label,
+                options: {}
+              };
+            }
+            thisProduct.params[paramId].options[optionId] = option.label;
             for (const image of images) {
               image.classList.add(classNames.menuProduct.imageVisible);
             }
@@ -321,9 +328,21 @@
           }
         }
       }
+      /* multiply price by amount */
+      thisProduct.priceSingle = price;
+      thisProduct.price =
+        thisProduct.priceSingle * thisProduct.amountWidget.value;
+
       /* set the contents of thisProduct.priceElem to be the value of variable price */
-      price *= thisProduct.amountWidget.value;
-      thisProduct.priceElem.innerHTML = price;
+      thisProduct.priceElem.innerHTML = thisProduct.price;
+      console.log(thisProduct.params);
+    }
+
+    addToCart() {
+      const thisProduct = this;
+      thisProduct.name = thisProduct.data.name;
+      thisProduct.amount = thisProduct.amountWidget.value;
+      app.cart.add(thisProduct);
     }
   }
 
@@ -344,6 +363,7 @@
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(
         select.cart.toggleTrigger
       );
+      thisCart.dom.productList = element.querySelector(select.cart.productList);
     }
 
     initActions() {
@@ -352,13 +372,30 @@
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
     }
+
+    add(menuProduct) {
+      const thisCart = this;
+
+      /* [DONE] generate HTML based on template */
+      const generatedHTML = templates.cartProduct(menuProduct);
+
+      /* [DONE] create element using utils.createElementFromHTML */
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+
+      /* [DONE] find products list container */
+      const productListContainer = thisCart.dom.productList;
+
+      /* [DONE] add element to products list */
+      productListContainer.appendChild(generatedDOM);
+
+      console.log('adding product', menuProduct);
+    }
   }
 
   const app = {
     initMenu: function() {
       const thisApp = this;
 
-      // console.log('thisApp.data', thisApp.data);
       for (const productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
       }
