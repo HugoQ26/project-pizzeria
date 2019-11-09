@@ -2,8 +2,18 @@ console.log('welcome app');
 import { settings, select, classNames } from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 const app = {
+  initBooking: function() {
+    const thisApp = this;
+
+    thisApp.booking = document.querySelector(select.containerOf.booking);
+
+    // eslint-disable-next-line no-unused-vars
+    const newBooking = new Booking(thisApp.booking);
+  },
+
   initPages: function() {
     const thisApp = this;
 
@@ -82,13 +92,16 @@ const app = {
         thisApp.initMenu();
       });
   },
+
   init: function() {
     const thisApp = this;
 
     thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
+    thisApp.initBooking();
   },
+
   initCart: function() {
     const thisApp = this;
     const cartElem = document.querySelector(select.containerOf.cart);
