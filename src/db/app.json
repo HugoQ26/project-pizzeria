@@ -202,7 +202,7 @@
   "event": [
     {
       "id": 1,
-      "date": "2019-01-01",
+      "date": "2019-11-22",
       "hour": "12:30",
       "table": 1,
       "repeat": false,
@@ -251,5 +251,16 @@
       "starters": ["lemonWater"]
     }
   ],
-  "booking": []
+  "booking": [
+    {
+      "id": 6,
+      "date": "2019-11-22",
+      "hour": "18:00",
+      "table": 1,
+      "repeat": false,
+      "duration": 4,
+      "ppl": 4,
+      "starters": ["water"]
+    }
+  ]
 }
