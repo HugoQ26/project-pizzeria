@@ -63,7 +63,8 @@ export const select = {
   booking: {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
-    tables: '.floor-plan .table'
+    tables: '.floor-plan .table',
+    form: '.booking-form'
   },
   nav: {
     links: '.main-nav a'
@@ -80,7 +81,8 @@ export const classNames = {
   },
   booking: {
     loading: 'loading',
-    tableBooked: 'booked'
+    tableBooked: 'booked',
+    tableSelected: 'selected'
   },
   nav: {
     active: 'active'
