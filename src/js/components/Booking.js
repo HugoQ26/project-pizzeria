@@ -253,6 +253,7 @@ class Booking {
   render(element) {
     const thisBooking = this;
     const generatedHTML = templates.bookingWidget();
+
     thisBooking.dom = {};
     thisBooking.dom.wrapper = element;
 

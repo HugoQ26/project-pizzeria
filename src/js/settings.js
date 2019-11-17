@@ -4,13 +4,17 @@ export const select = {
   templateOf: {
     menuProduct: '#template-menu-product',
     cartProduct: '#template-cart-product',
-    bookingWidget: '#template-booking-widget'
+    bookingWidget: '#template-booking-widget',
+    landingPage: '#template-landing-page'
   },
   containerOf: {
     menu: '#product-list',
     cart: '#cart',
     pages: '#pages',
-    booking: '.booking-wrapper'
+    booking: '.booking-wrapper',
+    landingPage: '#landing-page',
+    header: 'header.header',
+    navTabs: '.main-nav'
   },
   all: {
     menuProducts: '#product-list > .product',
@@ -133,5 +137,8 @@ export const templates = {
   ),
   bookingWidget: Handlebars.compile(
     document.querySelector(select.templateOf.bookingWidget).innerHTML
+  ),
+  landingPage: Handlebars.compile(
+    document.querySelector(select.templateOf.landingPage).innerHTML
   )
 };

@@ -3,8 +3,20 @@ import { settings, select, classNames } from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
+import LandingPage from './components/LandingPage.js';
 
 const app = {
+  initLandingPage: function() {
+    const thisApp = this;
+
+    thisApp.landingPage = document.querySelector(
+      select.containerOf.landingPage
+    );
+
+    // eslint-disable-next-line no-unused-vars
+    const newLandingPage = new LandingPage(thisApp.landingPage);
+  },
+
   initBooking: function() {
     const thisApp = this;
 
@@ -21,18 +33,22 @@ const app = {
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
     const idFromHash = window.location.hash.replace('#/', '');
-    // thisApp.activatePage(thisApp.pages[0] + '.' + idFromHash);
+    console.log(idFromHash);
 
-    let pageMatchingHash = thisApp.pages[0].id;
+    let pageMatchingHash = thisApp.pages[2].id;
+    console.log(pageMatchingHash);
 
     for (const page of thisApp.pages) {
       if (page.id == idFromHash) {
+        console.log('page id', page.id);
+        console.log('idFromhash', idFromHash);
         pageMatchingHash = page.id;
         break;
       }
     }
 
     thisApp.activatePage(pageMatchingHash);
+
     for (const link of thisApp.navLinks) {
       link.addEventListener('click', function(event) {
         //const clickedElement = this;
@@ -100,6 +116,7 @@ const app = {
     thisApp.initData();
     thisApp.initCart();
     thisApp.initBooking();
+    thisApp.initLandingPage();
   },
 
   initCart: function() {
