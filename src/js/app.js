@@ -15,6 +15,19 @@ const app = {
 
     // eslint-disable-next-line no-unused-vars
     const newLandingPage = new LandingPage(thisApp.landingPage);
+
+    thisApp.picturesLinks = document.querySelectorAll(select.landingPage.links);
+
+    for (const link of thisApp.picturesLinks) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        /* get page id from href attribute */
+        const id = link.getAttribute('href').replace('#', '');
+
+        thisApp.activatePage(id);
+      });
+    }
   },
 
   initBooking: function() {
@@ -59,9 +72,6 @@ const app = {
 
         /* run thisApp.activeatePage with that id */
         thisApp.activatePage(id);
-
-        /* change URL hash */
-        window.location.hash = '#/' + id;
       });
     }
   },
@@ -80,6 +90,8 @@ const app = {
         link.getAttribute('href') == '#' + pageId
       );
     }
+    /* change URL hash */
+    window.location.hash = '#/' + pageId;
   },
 
   initMenu: function() {

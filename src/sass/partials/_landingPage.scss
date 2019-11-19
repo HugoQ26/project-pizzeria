@@ -2,6 +2,81 @@
   display: none;
 }
 
-.headerbmargin {
+.mb-60 {
   padding-bottom: 60px;
+}
+
+section.top-picture-links {
+  .row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+
+  .box {
+    flex: 0 0 49.5%;
+    height: 120px;
+    position: relative;
+    margin-bottom: 5px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h3,
+    h4,
+    p {
+      font-family: $font-header;
+      color: $color-light;
+      margin: 0;
+      position: absolute;
+      left: 50%;
+      transition: all 400ms;
+    }
+
+    h3 {
+      top: 50%;
+      font-size: 24px;
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover h3 {
+      transform: translate(-50%, -90%);
+    }
+
+    p {
+      top: 80%;
+      font-size: 14px;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    &:hover p {
+      transform: translate(-50%, -100%);
+      opacity: 1;
+    }
+  }
+
+  .box:nth-of-type(3) {
+    flex: 0 0 100%;
+    background: $color-main;
+
+    h3 {
+      top: 40%;
+    }
+
+    &:hover h3 {
+      transform: translate(-50%, -50%);
+    }
+
+    h4 {
+      top: 70%;
+      font-size: 14px;
+      transform: translate(-50%, -50%);
+      letter-spacing: 1.3px;
+    }
+  }
 }

@@ -72,6 +72,9 @@ export const select = {
   },
   nav: {
     links: '.main-nav a'
+  },
+  landingPage: {
+    links: '.top-picture-links a'
   }
 };
 
