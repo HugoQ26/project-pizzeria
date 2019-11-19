@@ -9,10 +9,10 @@ class LandingPage {
   }
 
   initActions() {
-    //const thisLandingPage = this;
-    // thisLandingPage.dom.headerCart.classList.add('none');
-    // thisLandingPage.dom.Cart.classList.add('none');
-    // thisLandingPage.dom.header.classList.add('mb-60');
+    const thisLandingPage = this;
+    thisLandingPage.dom.headerCart.classList.add('none');
+    thisLandingPage.dom.Cart.classList.add('none');
+    thisLandingPage.dom.header.classList.add('mb-60');
   }
 
   render(element) {

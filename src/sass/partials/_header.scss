@@ -2,11 +2,11 @@
   padding: ($base-size * 5) 0 ($base-size * 8) 0;
   background: $color-dark;
   color: $color-light;
+  transition: all 500ms;
 
   &__wrapper {
     position: relative;
   }
-
 }
 
 .logo {
@@ -23,7 +23,6 @@
     span {
       font-weight: $font-bold;
     }
-
   }
 
   &__subtitle {
@@ -32,13 +31,14 @@
     font-weight: $font-light;
     font-style: italic;
   }
-
 }
 
 .main-nav {
   position: absolute;
   @include flex(row, flex-start, flex-start);
   bottom: ($base-size * -8);
+  overflow: hidden;
+  transition: $transition;
 
   a {
     @extend .h2;
@@ -54,7 +54,5 @@
     &.active {
       background: lighten($color-dark, 75%);
     }
-
   }
-
 }

@@ -25,6 +25,9 @@ const app = {
         /* get page id from href attribute */
         const id = link.getAttribute('href').replace('#', '');
 
+        newLandingPage.dom.headerCart.classList.remove('none');
+        newLandingPage.dom.Cart.classList.remove('none');
+        newLandingPage.dom.header.classList.remove('mb-60');
         thisApp.activatePage(id);
       });
     }
