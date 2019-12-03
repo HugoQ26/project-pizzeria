@@ -21,8 +21,12 @@ class Cart {
     thisCart.dom.productList = element.querySelector(select.cart.productList);
     thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
     thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
-    thisCart.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
-    thisCart.address = thisCart.dom.wrapper.querySelector(select.cart.address);
+    thisCart.phone = thisCart.dom.wrapper.querySelector(
+      select.cart.phone
+    ).value;
+    thisCart.address = thisCart.dom.wrapper.querySelector(
+      select.cart.address
+    ).value;
 
     thisCart.renderTotalsKeys = [
       'totalNumber',
@@ -110,18 +114,25 @@ class Cart {
 
   sendOrder() {
     const thisCart = this;
-    thisCart.phone = thisCart.phone.value;
-    thisCart.address = thisCart.address.value;
 
     const url = settings.db.url + '/' + settings.db.order;
 
+    const {
+      phone,
+      address,
+      totalPrice,
+      totalNumber,
+      subtotalPrice,
+      defaultDeliveryFee
+    } = thisCart;
+
     const payload = {
-      phone: thisCart.phone,
-      address: thisCart.address,
-      totalPrice: thisCart.totalPrice,
-      totalNumber: thisCart.totalNumber,
-      subtotalPrice: thisCart.subtotalPrice,
-      deliveryFee: thisCart.defaultDeliveryFee,
+      phone,
+      address,
+      totalPrice,
+      totalNumber,
+      subtotalPrice,
+      defaultDeliveryFee,
       products: []
     };
 
